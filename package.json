@@ -1,0 +1,34 @@
+{
+  "name": "xia-qingyue-reloaded",
+  "version": "1.0.0",
+  "description": "A quick dirty code to revive XQ discord bot",
+  "main": "xq.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node xq",
+    "lint": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xomon-xihau/Xia-Qingyue-Reloaded.git"
+  },
+  "keywords": [
+    "disocrd",
+    "atg",
+    "xia-qingyue"
+  ],
+  "author": "Xomon Xihau",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/xomon-xihau/Xia-Qingyue-Reloaded/issues"
+  },
+  "homepage": "https://github.com/xomon-xihau/Xia-Qingyue-Reloaded#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
+    "discord.js": "^12.5.3",
+    "dotenv": "^10.0.0",
+    "node-fetch": "^2.6.1",
+    "random": "^3.0.6",
+    "winston": "^3.3.3"
+  }
+}
