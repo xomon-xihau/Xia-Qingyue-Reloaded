@@ -16,27 +16,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-const fetch = require("node-fetch");
-const cheerio = require("cheerio");
-
+const random = require("random");
 module.exports = {
-  name: "lnmtl",
-  run: (msg, _, logger) => {
-    const url = "https://lnmtl.com/novel/against-the-gods";
-    fetch(url)
-      .then((res) => {
-        if (res.ok) return res;
-        throw new Error();
-      })
-      .then((res) => res.text())
-      .then((html) => {
-        const $ = cheerio.load(html);
-        const chap = $("a.chapter-link").attr("href");
-        return msg.channel.send(chap);
-      })
-      .catch((e) => {
-        logger.log("error", e);
-        return msg.channel.send("Something Went Wrong!!");
-      });
+  name: "yn",
+  aliases: ["yesorno"],
+  run: (msg, args) => {
+    if (args.length === 0)
+      return msg.channel.send("Please provide an argument!! [Ex: !qt yc]");
+    const ans = random.bool() ? "Yes" : "No";
+    const m = [`> ${msg.content}`, ans].join("\n");
+    return msg.channel.send(m);
   },
 };

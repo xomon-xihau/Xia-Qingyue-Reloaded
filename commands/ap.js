@@ -16,27 +16,33 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-const fetch = require("node-fetch");
-const cheerio = require("cheerio");
-
+const pics = require("../util/pics.js");
+const random = require("random");
 module.exports = {
-  name: "lnmtl",
-  run: (msg, _, logger) => {
-    const url = "https://lnmtl.com/novel/against-the-gods";
-    fetch(url)
-      .then((res) => {
-        if (res.ok) return res;
-        throw new Error();
-      })
-      .then((res) => res.text())
-      .then((html) => {
-        const $ = cheerio.load(html);
-        const chap = $("a.chapter-link").attr("href");
-        return msg.channel.send(chap);
-      })
-      .catch((e) => {
-        logger.log("error", e);
-        return msg.channel.send("Something Went Wrong!!");
-      });
+  name: "ap",
+  aliases: ["atgp"],
+  run: (msg, args) => {
+    if (args.length === 0) {
+      return msg.channel.send(
+        "Plz provide an argument!! [Ex: !ap yc] or [Ex: !ap yc 2]"
+      );
+    }
+    const p = pics.get(args[0]);
+    if (p) {
+      let num = 0;
+      if (
+        p.length > 1 &&
+        !isNaN(args[1]) &&
+        args[1] < p.length &&
+        args[1] > 0
+      ) {
+        num = args[1];
+      } else {
+        num = random.int(0, p.length - 1);
+      }
+      return msg.channel.send({ files: [p[num]] });
+    } else {
+      return msg.channel.send("Not Found!!");
+    }
   },
 };

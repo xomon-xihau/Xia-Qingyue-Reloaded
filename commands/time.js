@@ -19,14 +19,12 @@
 module.exports = {
   name: "time",
   aliases: ["mtime"],
-  cooldown: 5,
-  description: "Returns Shanghai's time",
-  usage: "time",
   run: (msg) => {
     const date = new Date();
     const time = date.toLocaleTimeString("en-US", {
       timeZone: "Asia/Shanghai",
     });
-    return msg.channel.send(`${time} (China)`);
+    const m = ["```", `⏳・${time} 🇨🇳`, "```"].join("\n");
+    return msg.channel.send(m);
   },
 };

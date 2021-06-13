@@ -16,6 +16,13 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+/**
+ * -- Importing --
+ * dotenv     -> for .env files
+ * winston    -> logger
+ * discord.js -> discord api wrapper
+ * fs         -> to import all commands files (commands/*.js)
+ */
 const { config } = require("dotenv");
 const winston = require("winston");
 const { Client, Collection } = require("discord.js");
@@ -24,10 +31,21 @@ const commandFiles = fs
   .readdirSync("./commands")
   .filter((file) => file.endsWith(".js"));
 
+/**
+ * -- ENV --
+ * TOKEN -> disord token
+ */
 config({
   path: `${__dirname}/.env`,
 });
 
+/**
+ * -- Logger --
+ * Initializes logger
+ * Will display log on screen and also store it in log file
+ * Example:
+ * [INFO] - Xia Qingyue in now Online.
+ */
 const logger = winston.createLogger({
   transports: [
     new winston.transports.Console(),
@@ -38,26 +56,47 @@ const logger = winston.createLogger({
   ),
 });
 
+/**
+ * -- Client --
+ * xq is the discord client
+ * the disableEveryone prevents the client to ping @everyone
+ */
 const xq = new Client({
   disableEveryone: true,
 });
 
+/**
+ * -- Collection --
+ * commands, aliases, cooldown
+ */
 xq.commands = new Collection();
 xq.aliases = new Collection();
-const cooldowns = new Collection();
+xq.cooldowns = new Collection();
 
 for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
   xq.commands.set(command.name, command);
 }
 
+/**
+ * -- Login --
+ */
 xq.login(process.env.TOKEN);
+
+/**
+ * -- Error Handling --
+ */
 process.on("uncaughtException", (err) => logger.log("error", err));
 
 xq.on("debug", (m) => logger.log("debug", m));
 xq.on("warn", (m) => logger.log("warn", m));
 xq.on("error", (m) => logger.log("error", m));
 
+/**
+ * -- Ready Event --
+ * [INFO] - Xia Qingyue is now online!
+ * Activity -> Watching Yun Che from Null Absyss!!
+ */
 xq.once("ready", () => {
   logger.log("info", `${xq.user.username} is now online!`);
 
@@ -69,9 +108,29 @@ xq.once("ready", () => {
     .catch((err) => logger.log("error", err));
 });
 
+/**
+ * -- Message Event --
+ * */
 xq.on("message", (msg) => {
+  /**
+   * -- Early Return (I) --
+   * If the author is bot.
+   * If message was not sent in server
+   * If message was not in acg server's marshole.
+   */
   if (msg.author.bot) return;
   if (!msg.guild) return;
+  if (
+    msg.guild.id === "442546874793328640" &&
+    msg.channel.id !== "566710843232878610"
+  )
+    return;
+
+  /**
+   * -- Parsing --
+   * parse message to get prefix, cmd and args
+   * return early if message isn't in particular format
+   */
   if (!msg.content.match(/^(!|\-\-|\?)/)) return;
 
   const message = msg.content.match(
@@ -83,12 +142,50 @@ xq.on("message", (msg) => {
   const prefix = message.prefix.trim();
   const cmd = message.cmd.trim().toLowerCase();
 
-  let command = xq.commands.get(cmd);
-  if (!command) {
-    command = xq.commands.get(xq.aliases.get(cmd));
-  }
+  const command =
+    xq.commands.get(cmd) ||
+    xq.commands.find((c) => c.aliases && c.aliases.includes(cmd));
 
+  /**
+   * -- command --
+   */
   if (command) {
+    /**
+     * -- Cooldown --
+     */
+    const { cooldowns } = xq;
+
+    if (!cooldowns.has(command.name)) {
+      cooldowns.set(command.name, new Collection());
+    }
+
+    const now = Date.now();
+    const timestamps = cooldowns.get(command.name);
+    const cooldownAmount = (command.cooldown || 6) * 1000;
+
+    if (timestamps.has(msg.author.id)) {
+      const expirationTime = timestamps.get(msg.author.id) + cooldownAmount;
+
+      if (now < expirationTime) {
+        const timeLeft = (expirationTime - now) / 1000;
+        const m = [
+          "```",
+          "🏵・cooldown",
+          `🛠・${command.name}`,
+          `⏳・${timeLeft.toFixed(0)} second(s) left`,
+          `👨🏻・${msg.author.tag}`,
+          "```",
+        ].join("\n");
+        return msg.channel.send(m);
+      }
+    }
+
+    timestamps.set(msg.author.id, now);
+    setTimeout(() => timestamps.delete(msg.author.id), cooldownAmount);
+
+    /**
+     * -- Execution --
+     */
     logger.log("info", `Prefix: ${prefix}`);
     logger.log("info", `Cmd: ${cmd}`);
 
@@ -98,6 +195,11 @@ xq.on("message", (msg) => {
         : "";
 
     logger.log("info", `Args: ${args}`);
-    command.run(msg, args, xq);
+    try {
+      command.run(msg, args, logger, xq);
+    } catch (e) {
+      logger.log("error", e);
+      return msg.channel.send("Something Went Wrong!!");
+    }
   }
 });

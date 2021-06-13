@@ -24,10 +24,7 @@ const random = require("random");
 module.exports = {
   name: "qt",
   aliases: ["quote"],
-  cooldown: 5,
-  description: "Get the quote from atg's character",
-  usage: "qt yc",
-  run: (msg, args) => {
+  run: (msg, args, logger) => {
     if (args.length === 0)
       return msg.channel.send("Please provide an argument!! [Ex: !qt yc]");
     const name = new Collection();
@@ -80,13 +77,18 @@ module.exports = {
               const chap = $(sup).text().trim().replace(/^.*Ch/, "Ch");
               quotes.push({ quote: quote, by: by, chap: chap });
             });
+          if (quotes.length === 0) return msg.channel.send("Not Found!!");
           const num = random.int(0, quotes.length - 1);
           const quote = quotes[num].quote;
           const by = quotes[num].by;
           const chap = quotes[num].chap;
-          return msg.channel.send(`${quote}\n${by}\n${chap}`);
+          const m = ["```", quote, `${by} (${chap})`, "```"].join("\n");
+          return msg.channel.send(m);
         })
-        .catch(console.error);
+        .catch((e) => {
+          logger.log("error", e);
+          return msg.channel.send("Something Went Wrong!!");
+        });
     } else {
       return msg.channel.send("No Quotes Found!!");
     }

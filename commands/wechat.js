@@ -22,10 +22,7 @@ const { Collection } = require("discord.js");
 
 module.exports = {
   name: "wechat",
-  cooldown: 5,
-  description: "Get txt from mars wechat",
-  usage: "chap",
-  run: (msg, args) => {
+  run: (msg, args, logger) => {
     if (args.length === 0)
       return msg.channel.send(
         "Please provide an argument. [Ex: !wechat Nab_R46Lmu72u0-9LyMf3g]"
@@ -48,13 +45,18 @@ module.exports = {
             const p = $(elem).text().trim();
             if (p !== "") content.push(p);
           });
-        return msg.channel.send(
-          `Title -> ${title}\n Author -> ${author}\n\`\`\`${content.join(
-            "\n"
-          )}\`\`\``,
-          { split: true }
-        );
+        const m = [
+          "```",
+          `Title・${title}`,
+          `Author・${author}`,
+          content.join("\n"),
+          "```",
+        ].join("\n");
+        return msg.channel.send(m, { split: true });
       })
-      .catch(console.error);
+      .catch((e) => {
+        logger.log("error", e);
+        return msg.channel.send("Something Went Wrong!!");
+      });
   },
 };

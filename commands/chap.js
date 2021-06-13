@@ -23,10 +23,7 @@ const { Collection } = require("discord.js");
 module.exports = {
   name: "chap",
   aliases: ["chapter"],
-  cooldown: 5,
-  description: "Get the info of latest chapter from Zongheng",
-  usage: "chap",
-  run: (msg) => {
+  run: (msg, _, logger) => {
     const url = "http://book.zongheng.com/book/408586.html";
     fetch(url)
       .then((res) => {
@@ -47,8 +44,12 @@ module.exports = {
         if (t) {
           time += ` [TL: ${time.match(/(\d+)/g)[0]} ${t}]`;
         }
-        return msg.channel.send(`Chap: ${chap}\nTime: ${time}`);
+        const m = ["```", `📓・${chap}`, `⏳・${time}`, "```"].join("\n");
+        return msg.channel.send(m);
       })
-      .catch(console.error);
+      .catch((e) => {
+        logger.log("error", e);
+        return msg.channel.send("Something Went Wrong!!");
+      });
   },
 };

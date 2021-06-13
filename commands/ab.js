@@ -23,10 +23,7 @@ const { Collection } = require("discord.js");
 module.exports = {
   name: "ab",
   aliases: ["abbreviation"],
-  cooldown: 5,
-  description: "Get the full form",
-  usage: "ab yc",
-  run: (msg, args) => {
+  run: (msg, args, logger) => {
     if (args.length === 0)
       return msg.channel.send("Please provide an argument!! [Ex: !ab yc]");
     const url =
@@ -43,23 +40,23 @@ module.exports = {
         $("tr").each((_, x) => {
           const a = $(x).find("td").first().text().trim();
           const b = $(x).find("td").find("a").text().trim();
-          if (
-            typeof a !== "undefined" &&
-            typeof b !== "undefined" &&
-            a !== "" &&
-            b !== ""
-          ) {
+          if (a !== "" && b !== "") {
             ab.set(a, b);
           }
         });
         ab.delete("Quotes");
         ab.delete("Songs");
-        const ans = ab.get(args[0].toUpperCase());
+        const p = args[0].toUpperCase();
+        const ans = ab.get(p);
         if (ans) {
-          return msg.channel.send(`${args[0].toUpperCase()}: ${ans}`);
+          const m = ["```", `${p}・${ans}`, "```"].join("\n");
+          return msg.channel.send(m);
         }
         return msg.channel.send("Not Found!!");
       })
-      .catch(console.error);
+      .catch((e) => {
+        logger.log("error", e);
+        return msg.channel.send("Something Went Wrong!!");
+      });
   },
 };
