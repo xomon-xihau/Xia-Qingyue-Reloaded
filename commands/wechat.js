@@ -42,12 +42,10 @@ module.exports = {
         const title = $("h2#activity-name").text().trim();
         const author = $("a#js_name").text().trim();
         const content = [];
-        $("div#js_content")
-          .find("p")
-          .each((_, elem) => {
-            const p = $("elem").text().trim();
-            if (p !== "") content.push(p);
-          });
+        $("p").each((_, elem) => {
+          const p = $("elem").text().trim();
+          if (p !== "") content.push(p);
+        });
         let i = 1;
         let j = 0;
         const arr = [content[0]];
