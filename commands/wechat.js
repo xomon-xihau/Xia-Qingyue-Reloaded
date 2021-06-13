@@ -61,6 +61,7 @@ module.exports = {
         }
         console.log(title);
         console.log(author);
+        console.log(content);
         console.log(arr);
         return;
       })
