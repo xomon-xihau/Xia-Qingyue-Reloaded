@@ -120,12 +120,13 @@ xq.on("message", (msg) => {
    */
   if (msg.author.bot) return;
   if (!msg.guild) return;
+  /*
   if (
     msg.guild.id === "442546874793328640" &&
     msg.channel.id !== "566710843232878610"
   )
     return;
-
+  */
   /**
    * -- Parsing --
    * parse message to get prefix, cmd and args
