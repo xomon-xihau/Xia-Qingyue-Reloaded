@@ -48,10 +48,12 @@ module.exports = {
             const p = $(elem).text().trim();
             if (p !== "") content.push(p);
           });
-        console.log(title);
-        console.log(author);
-        console.log(content);
-        return;
+        return msg.channel.send(
+          `Title -> ${title}\n Author -> ${author}\n\`\`\`${content.join(
+            "\n"
+          )}\`\`\``,
+          { split: true }
+        );
       })
       .catch(console.error);
   },
