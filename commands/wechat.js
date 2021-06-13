@@ -48,23 +48,9 @@ module.exports = {
             const p = $(elem).text().trim();
             if (p !== "") content.push(p);
           });
-        let i = 1;
-        let j = 0;
-        const arr = [content[0]];
-        while (content.length > 0) {
-          const str = arr[j] + "\n" + content[i];
-          if (str.length < 1800) {
-            arr[j] = str;
-          } else {
-            j++;
-            arr[j] = content[i];
-          }
-          i++;
-        }
         console.log(title);
         console.log(author);
         console.log(content);
-        console.log(arr);
         return;
       })
       .catch(console.error);
