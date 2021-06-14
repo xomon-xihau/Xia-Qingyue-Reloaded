@@ -33,13 +33,15 @@ module.exports = {
       const len = p.length;
       if (args.length > 1 && !isNaN(args[1]) && args[1] > 0) {
         if (args[1] > len) {
-          num = (args[1] % len) - 1;
+          const rem = args[1] % len;
+          num = rem === 0 ? len - 1 : rem - 1;
         } else {
-          num = (args[1] % len) - 1;
+          num = args[1] - 1;
         }
       } else {
         num = random.int(0, len - 1);
       }
+      console.log(num);
       return msg.channel.send({ files: [p[num]] });
     } else {
       const m = [
