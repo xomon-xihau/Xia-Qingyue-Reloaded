@@ -36,8 +36,10 @@ module.exports = {
       .then((res) => res.text())
       .then((html) => {
         const $ = cheerio.load(html);
-        const title = $("h2#activity-name").text().trim();
-        const author = $("a#js_name").text().trim();
+        const title = $('meta[property="og:title"]').attr("content");
+        const author =
+          $("a#js_name").text().trim() ||
+          $(".account_nickname_inner").text().trim();
         const content = [];
         $("div#js_content")
           .find("p")
