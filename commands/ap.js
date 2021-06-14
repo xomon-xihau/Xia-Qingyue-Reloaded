@@ -30,15 +30,15 @@ module.exports = {
     const p = pics.get(args[0].toLowerCase());
     if (p) {
       let num = 0;
-      if (
-        p.length > 1 &&
-        !isNaN(args[1]) &&
-        args[1] < p.length &&
-        args[1] > 0
-      ) {
-        num = args[1];
+      const len = p.length;
+      if (args.length > 1 && !isNaN(args[1]) && args[1] > 0) {
+        if (args[1] > len) {
+          num = (args[1] % len) - 1;
+        } else {
+          num = (args[1] % len) - 1;
+        }
       } else {
-        num = random.int(0, p.length - 1);
+        num = random.int(0, len - 1);
       }
       return msg.channel.send({ files: [p[num]] });
     } else {
