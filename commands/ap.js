@@ -27,7 +27,7 @@ module.exports = {
         "Plz provide an argument!! [Ex: !ap yc] or [Ex: !ap yc 2]"
       );
     }
-    const p = pics.get(args[0]);
+    const p = pics.get(args[0].toLowerCase());
     if (p) {
       let num = 0;
       if (
@@ -42,7 +42,13 @@ module.exports = {
       }
       return msg.channel.send({ files: [p[num]] });
     } else {
-      return msg.channel.send("Not Found!!");
+      const m = [
+        "```",
+        "🛠・Not Found!!",
+        `🖼・${Array.from(pics.keys()).join("、")}。`,
+        "```",
+      ].join("\n");
+      return msg.channel.send(m);
     }
   },
 };

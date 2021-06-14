@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-const pics = require("../util/emote.js");
+const em = require("../util/emote.js");
 module.exports = {
   name: "em",
   aliases: ["emote"],
@@ -24,10 +24,16 @@ module.exports = {
     if (args.length === 0) {
       return msg.channel.send("Plz provide an argument!! [Ex: !em xqbestgirl]");
     }
-    const p = pics.get(args[0]);
+    const p = em.get(args[0].toLowerCase());
     if (p) {
       return msg.channel.send({ files: [p] });
     }
-    return msg.channel.send("Not Found!!");
+    const m = [
+      "```",
+      "🛠・Not Found!!",
+      `🖼・${Array.from(em.keys()).join("、")}。`,
+      "```",
+    ].join("\n");
+    return msg.channel.send(m);
   },
 };
