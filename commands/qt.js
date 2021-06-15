@@ -39,7 +39,6 @@ module.exports = {
     name.set("jas", "Jasmine");
     name.set("jx", "Jun_Xilei");
     name.set("lde", "Huan_Caiyi");
-    name.set("lf", "Chu_Yuechan");
     name.set("mb", "Mu_Bingyun");
     name.set("mf", "Mu_Feixue");
     name.set("mx", "Mu_Xuanyin");
@@ -92,7 +91,13 @@ module.exports = {
           return msg.channel.send("Something Went Wrong!!");
         });
     } else {
-      return msg.channel.send("No Quotes Found!!");
+      const m = [
+        "```",
+        "🛠・Not Found!!",
+        `👨🏻・${Array.from(name.keys()).join("、")}。`,
+        "```",
+      ].join("\n");
+      return msg.channel.send(m);
     }
   },
 };
