@@ -29,6 +29,7 @@ module.exports = {
       return msg.channel.send("Please provide an argument!! [Ex: !qt yc]");
     const name = new Collection();
     name.set("bb", "Yun_Qianying");
+    name.set("cw", "Chi_Wuyao");
     name.set("cy", "Cang_Yue");
     name.set("cyc", "Chu_Yuechan");
     name.set("cz", "Caizhi");
@@ -49,6 +50,7 @@ module.exports = {
     name.set("xq", "Xia_Qingyue");
     name.set("yc", "Yun_Che");
     name.set("yqy", "Yun_Qianying");
+    name.set("yw", "Yun_Wuxin");
 
     if (name.has(args[0].toLowerCase())) {
       const url = `https://ni-tian-xie-shen-against-the-gods.fandom.com/wiki/${name.get(
