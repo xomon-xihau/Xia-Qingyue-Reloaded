@@ -135,14 +135,14 @@ xq.on("message", (msg) => {
   if (!msg.content.match(/^(!|\-\-|\?)/)) return;
 
   const message = msg.content.match(
-    /^(?<prefix>(!|\-\-|\?))\s*(?<cmd>\w+)(?:\s*(?<args>.+))?$/
+    /^(?<prefix>(!|\-\-|\?))(?:\s*(?<cmd>\w+))?(?:\s*(?<args>.+))?$/
   ).groups;
 
-  if (typeof message === "undefined") return;
-
   const prefix = message.prefix.trim();
-  const cmd = message.cmd.trim().toLowerCase();
 
+  if (typeof message.cmd === "undefined") return;
+
+  const cmd = message.cmd.trim().toLowerCase();
   const command =
     xq.commands.get(cmd) ||
     xq.commands.find((c) => c.aliases && c.aliases.includes(cmd));
