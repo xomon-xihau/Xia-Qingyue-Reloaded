@@ -57,8 +57,8 @@ module.exports = {
           lang: "en",
           content: [{ title: og_title, data: content.join("\n") }],
         };
-        new Epub(option, `epub/${og_title}.epub`).promise.then(
-          () => msg.channel.send({ files: [`epub/${og_title}.epub`] }),
+        new Epub(option, `${og_title}.epub`).promise.then(
+          () => msg.channel.send({ files: [`${og_title}.epub`] }),
           (err) => {
             logger.log("error", err);
             return msg.channel.send("Epub Generation Failed!!");

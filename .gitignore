@@ -8,4 +8,4 @@ node_modules/
 log
 
 # Epub 
-epub/*.epub
+*.epub
