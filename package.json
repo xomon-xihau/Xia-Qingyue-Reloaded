@@ -27,6 +27,7 @@
     "cheerio": "^1.0.0-rc.10",
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
+    "epub-gen": "^0.1.0",
     "node-fetch": "^2.6.1",
     "random": "^3.0.6",
     "winston": "^3.3.3"
