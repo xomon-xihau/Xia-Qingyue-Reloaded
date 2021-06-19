@@ -32,9 +32,7 @@ module.exports = {
     fetch(url)
       .then((res) => {
         if (res.ok) return res;
-        console.log(res.status);
-        console.log(res.statusText);
-        throw new Error();
+        throw new Error(`${res.status}, ${res.statusText}`);
       })
       .then((res) => res.text())
       .then((html) => {
