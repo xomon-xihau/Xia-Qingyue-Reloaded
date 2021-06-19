@@ -32,6 +32,8 @@ module.exports = {
     fetch(url)
       .then((res) => {
         if (res.ok) return res;
+        console.log(res.status);
+        console.log(res.statusText);
         throw new Error();
       })
       .then((res) => res.text())
@@ -66,7 +68,6 @@ module.exports = {
         );
       })
       .catch((e) => {
-        console.log(e);
         logger.log("error", e);
         return msg.channel.send("Something Went Wrong!!");
       });
