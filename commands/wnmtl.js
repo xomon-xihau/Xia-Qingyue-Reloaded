@@ -66,6 +66,7 @@ module.exports = {
         );
       })
       .catch((e) => {
+        console.log(e);
         logger.log("error", e);
         return msg.channel.send("Something Went Wrong!!");
       });
