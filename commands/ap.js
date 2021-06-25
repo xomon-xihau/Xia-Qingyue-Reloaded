@@ -41,8 +41,12 @@ module.exports = {
       } else {
         num = random.int(0, len - 1);
       }
-      console.log(num);
-      return msg.channel.send({ files: [p[num]] });
+      return msg.channel.send(
+        `[${args[0].toUpperCase()}] [No・${num + 1}] [T・${len}]`,
+        {
+          files: [p[num]],
+        }
+      );
     } else {
       const m = [
         "```",
