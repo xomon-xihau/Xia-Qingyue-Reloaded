@@ -24,6 +24,7 @@ const Epub = require("epub-gen");
 module.exports = {
   name: "wnmtl",
   run: (msg, args, logger) => {
+    return msg.channel.send("Temporary disabled due to 503 error!!");
     if (args.length === 0)
       return msg.channel.send(
         "Please provide an argument. [Ex: !wnmtl 645235-fairness]"
@@ -50,7 +51,7 @@ module.exports = {
           });
         if (content.length === 0) return msg.channel.send("No content found!!");
         const option = {
-          cover: "atg-cover.jpg",
+          cover: "pics/e/cover.jpg",
           title: og_title,
           author: "Mars Gravity (火星引力)",
           publisher: "wnmtl",

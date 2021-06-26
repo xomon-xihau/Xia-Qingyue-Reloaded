@@ -1,74 +1,87 @@
 "use strict";
 const { Collection } = require("discord.js");
-
+const path = require("path");
 const pics = new Collection();
 
-pics.set("cz", [
-  "https://i.imgur.com/PDKa74q.jpg", // o
-]);
-pics.set("yc", [
-  "https://i.imgur.com/RRzaTjv.jpg", // o
-  "https://i.imgur.com/pMyv07W.jpg", // o
-  "https://i.imgur.com/FtOzzhU.png", // o -> xl
-  "https://i.imgur.com/Teqt0Az.png", // m -> xl
-  "https://i.imgur.com/4Mu6Psy.jpg", // m -> jas
-  "https://i.imgur.com/8gx6oqJ.jpg", // m -> xq
-  "https://i.imgur.com/lwrdfPk.jpg", // m
-  "https://i.imgur.com/YXg8LLB.png", // m
-  "https://i.imgur.com/qG0b3DG.jpg", // m
-]);
-pics.set("js", [
-  "https://i.imgur.com/GfmLr9C.jpg", // o
-  "https://i.imgur.com/HDfsg0y.jpg", // o
-  "https://i.imgur.com/95mMTHp.jpg", // o
-  "https://i.imgur.com/2kzBHyZ.jpg", // o
-  "https://i.imgur.com/4Mu6Psy.jpg", // m -> yc
-  "https://i.imgur.com/Einzxqi.jpg", // m -> cy
-  "https://i.imgur.com/1qPFptr.jpg", // m
-]);
-pics.set("mx", [
-  "https://i.imgur.com/1TfcGq4.png", // o
-  "https://i.imgur.com/GwaYI8E.jpg", // o
-]);
-pics.set("cw", [
-  "https://i.imgur.com/9lQjD1i.png", // o
-  "https://i.imgur.com/7L7pKaS.png", // o
-  "https://i.imgur.com/SE3DO2W.png", // o
-]);
-pics.set("cyc", [
-  "https://i.imgur.com/Xcht5Gn.jpg", // m
-  "https://i.imgur.com/BCdYBIV.png", // m
-  "https://i.imgur.com/pmFpQq3.jpg", // m
-]);
-pics.set("xq", [
-  "https://i.imgur.com/Av9JMFf.jpeg", // o
-  "https://i.imgur.com/iuUCymA.jpeg", // o
-  "https://i.imgur.com/JIFgl8p.jpeg", // o
-  "https://i.imgur.com/4nVc0If.jpg", // m
-  "https://i.imgur.com/tT9jNau.jpg", // m
-  "https://i.imgur.com/8gx6oqJ.jpg", // m
-  "https://i.imgur.com/RTfyN3V.jpg", // m
-  "https://i.imgur.com/6B8gvFv.jpg", // m
-  "https://i.imgur.com/OfIJHlY.jpg", // m
-]);
-pics.set("cy", [
-  "https://i.imgur.com/Einzxqi.jpg", // m
-  "https://i.imgur.com/ZXa73c1.jpg", // m
-  "https://i.imgur.com/TUM2ibL.jpg", // m
-  "https://i.imgur.com/nddt64t.jpg", // m
-  "https://i.imgur.com/lLFQaet.jpg", // m
-  "https://i.imgur.com/YzOYiRq.jpg", // m
-]);
-pics.set("xl", [
-  "https://i.imgur.com/FtOzzhU.png", // o -> yc
-  "https://i.imgur.com/Teqt0Az.png", // m
-  "https://i.imgur.com/3e4g35N.jpg", // m
-]);
-pics.set("qy", [
-  "https://i.imgur.com/GI3X2uP.png", // o
-  "https://i.imgur.com/UvjITnK.jpg", // o
-  "https://i.imgur.com/QoIlyeC.jpg", // o
-  "https://i.imgur.com/lxRVFCD.jpg", // o
-]);
+pics.set("cz", {
+  n: "Caizhi",
+  p: ["pics/o/cz_rd.jpg"],
+});
+pics.set("yc", {
+  n: "Yun Che",
+  p: [
+    "pics/o/yc_bl.jpg",
+    "pics/o/yc_bd.jpg",
+    "pics/o/xl_wyc.jpg",
+    "pics/m/yc_ba.jpg",
+  ],
+});
+pics.set("js", {
+  n: "Jasmine",
+  p: [
+    "pics/o/js_ndb.jpg",
+    "pics/o/js_nlb.jpg",
+    "pics/o/js_odb.jpg",
+    "pics/o/js_olb.jpg",
+    "pics/m/js_pyc.jpg",
+  ],
+});
+pics.set("mx", {
+  n: "Mu Xuanyin",
+  p: [
+    "pics/o/mx_fbh.jpg",
+    "pics/o/mx_fwh.jpg",
+    "pics/o/mx_cfbh.jpg",
+    "pics/o/mx_cfwh.jpg",
+    "pics/o/mx_op.png",
+  ],
+});
+pics.set("cw", {
+  n: "Chi Wuyao",
+  p: ["pics/o/cw_wc.jpg", "pics/o/cw_cl.jpg", "pics/o/cw_cwc.jpg"],
+});
+pics.set("cyc", {
+  n: "Chu Yuechan",
+  p: ["pics/m/cyc_bp.jpg", "pics/m/cyc_bc.jpg", "pics/m/cyc_ud.jpg"],
+});
+pics.set("xq", {
+  n: "Xia Qingyue",
+  p: [
+    "pics/o/xq_db.jpg",
+    "pics/o/xq_lb.jpg",
+    "pics/o/xq_bp.jpg",
+    "pics/o/xq_cbp.jpg",
+    "pics/m/xq_mbp.jpg",
+  ],
+});
+pics.set("cy", {
+  n: "Cang Yue",
+  p: [
+    "pics/m/cy_wd.jpg",
+    "pics/m/cy_std.jpg",
+    "pics/m/cy_es.jpg",
+    "pics/m/cy_el.jpg",
+  ],
+});
+pics.set("xl", {
+  n: "Xiao Lingxi",
+  p: ["pics/o/xl_wyc.jpg"],
+});
+pics.set("qy", {
+  n: "Qianye Yinger",
+  p: ["pics/o/qy_gh.jpg", "pics/o/qy_bh.jpg"],
+});
+pics.set("h", {
+  n: "Hong'er",
+  p: ["pics/m/h_s.jpg", "pics/m/h_po.jpg"],
+});
+pics.set("lde", {
+  n: "Huan Caiyi",
+  p: ["pics/m/lde_s.jpg", "pics/m/lde_st.jpg"],
+});
+pics.set("fx", {
+  n: "Feng Xue'er",
+  p: ["pics/m/fx_fs.jpg", "pics/m/fx_fst.jpg"],
+});
 
 module.exports = pics;

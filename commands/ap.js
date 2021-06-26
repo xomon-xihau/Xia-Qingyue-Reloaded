@@ -30,7 +30,7 @@ module.exports = {
     const p = pics.get(args[0].toLowerCase());
     if (p) {
       let num = 0;
-      const len = p.length;
+      const len = p["p"].length;
       if (args.length > 1 && !isNaN(args[1]) && args[1] > 0) {
         if (args[1] > len) {
           const rem = args[1] % len;
@@ -41,10 +41,17 @@ module.exports = {
       } else {
         num = random.int(0, len - 1);
       }
+      const file = p["p"][num];
+      const type = file.split("/")[1];
+      const ftn = type === "o" ? "wechat" : "manhua";
+
+      let line = `[There are ${len} pics of ${p["n"]} in db]`;
+      if (len === 1) line = `[There is only 1 pic of ${p["n"]} in db]`;
+
       return msg.channel.send(
-        `[${args[0].toUpperCase()}] [No・${num + 1}] [T・${len}]`,
+        [`[Pic No. ${num + 1}] [${ftn}]`, line].join("\n"),
         {
-          files: [p[num]],
+          files: [file],
         }
       );
     } else {

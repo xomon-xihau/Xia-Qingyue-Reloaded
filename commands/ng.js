@@ -50,7 +50,7 @@ module.exports = {
           });
         if (content.length === 0) return msg.channel.send("No content found!!");
         const option = {
-          cover: "atg-cover.jpg",
+          cover: "pics/e/cover.jpg",
           title: og_title,
           author: "Mars Gravity (火星引力)",
           publisher: "novel-gate",
